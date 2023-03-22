@@ -5,6 +5,7 @@ import {
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
+    IonChip,
     IonCol,
     IonContent,
     IonFab,
@@ -37,6 +38,7 @@ import {
     add,
     ellipsisVerticalSharp,
 } from "ionicons/icons";
+import { v4 } from "uuid";
 import EditModal from "./EditModal";
 const Home: React.FC = () => {
     const { getEmp, delEmp } = useApi();
@@ -98,88 +100,68 @@ const Home: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonCard>
-                    <IonList>
-                        <IonListHeader>
-                            <IonLabel>Danh Sách Nhân Viên</IonLabel>
-                            <IonFabButton
+                <IonList>
+                    {emp.map((el: any) => (
+                        // Anh dung package uuid, thay` recommend
+                        <IonItem key={v4()}>
+                            <IonAvatar
+                                slot="start"
                                 onClick={() => {
-                                    setAddModal({
-                                        isOpen: !addModal.isOpen,
-                                    });
-                                }}
-                                color="primary"
-                                size="small">
-                                <IonIcon icon={add}></IonIcon>
-                            </IonFabButton>
-                        </IonListHeader>
-                        {emp.map((el: any) => (
-                            <IonItem key={el.id}>
-                                <IonAvatar
-                                    slot="start"
-                                    onClick={() => {
-                                        onClickDetailsButton(
-                                            !myModal.isOpen,
-                                            el
-                                        );
-                                    }}>
-                                    <img
-                                        src=""
-                                        alt=""
-                                    />
-                                </IonAvatar>
-                                <IonLabel
-                                    onClick={() => {
-                                        onClickDetailsButton(
-                                            !myModal.isOpen,
-                                            el
-                                        );
-                                    }}>
-                                    {el.FullName}
-                                </IonLabel>
-
-                                <IonButton
-                                    onClick={() => {
-                                        onClickDetailsButton(
-                                            !editModal.isOpen,
-                                            el
-                                        );
-                                    }}
-                                    color="success">
-                                    <IonIcon icon={eye}></IonIcon>
-                                    Xem
-                                </IonButton>
-                                <IonButton
-                                    onClick={() => {
-                                        onClickEditButton(
-                                            !editModal.isOpen,
-                                            el
-                                        );
-                                    }}>
-                                    <IonIcon icon={createOutline}></IonIcon>
-                                    Chỉnh sửa
-                                </IonButton>
-                                <IonButton
-                                    onClick={() => {
-                                        onClickDelButton(el.id);
-                                    }}
-                                    color="danger">
-                                    <IonIcon icon={trash}></IonIcon>
-                                    Xóa
-                                </IonButton>
-
-                                {/* <IonFab>
-              <IonFabButton><IonIcon icon={add}></IonIcon></IonFabButton>
-              <IonFabList side='start'>
-                <IonFabButton>
-                  Edit
-                </IonFabButton>
-              </IonFabList>
-            </IonFab> */}
-                            </IonItem>
-                        ))}
-                    </IonList>
-                </IonCard>
+                                    onClickDetailsButton(!myModal.isOpen, el);
+                                }}>
+                                <img
+                                    src="https://ionicframework.com/docs/img/demos/avatar.svg"
+                                    alt=""
+                                />
+                            </IonAvatar>
+                            <IonLabel
+                                onClick={() => {
+                                    onClickDetailsButton(!myModal.isOpen, el);
+                                }}>
+                                {el.FullName}
+                            </IonLabel>
+                            <IonFab
+                                slot="end"
+                                horizontal="end">
+                                <IonFabButton
+                                    size="small"
+                                    color="medium">
+                                    <IonIcon
+                                        icon={ellipsisVerticalSharp}></IonIcon>
+                                </IonFabButton>
+                                <IonFabList side="start">
+                                    <IonFabButton
+                                        color="danger"
+                                        onClick={() => {
+                                            onClickDelButton(el.id);
+                                        }}>
+                                        <IonIcon icon={trash}></IonIcon>
+                                    </IonFabButton>
+                                    <IonFabButton
+                                        color="primary"
+                                        onClick={() => {
+                                            onClickEditButton(
+                                                !editModal.isOpen,
+                                                el
+                                            );
+                                        }}>
+                                        <IonIcon icon={createOutline}></IonIcon>
+                                    </IonFabButton>
+                                    <IonFabButton
+                                        color="success"
+                                        onClick={() => {
+                                            onClickDetailsButton(
+                                                !editModal.isOpen,
+                                                el
+                                            );
+                                        }}>
+                                        <IonIcon icon={eye}></IonIcon>
+                                    </IonFabButton>
+                                </IonFabList>
+                            </IonFab>
+                        </IonItem>
+                    ))}
+                </IonList>
                 {/* Ham Modal */}
                 <MyModal
                     isOpen={myModal.isOpen}
@@ -195,6 +177,18 @@ const Home: React.FC = () => {
                     initialData={data}
                     onClose={() => setEditModal({ isOpen: !editModal.isOpen })}
                 />
+                <IonFab
+                    horizontal="center"
+                    vertical="bottom">
+                    <IonFabButton
+                        onClick={() => {
+                            setAddModal({
+                                isOpen: !addModal.isOpen,
+                            });
+                        }}>
+                        <IonIcon icon={add}></IonIcon>
+                    </IonFabButton>
+                </IonFab>
             </IonContent>
         </IonPage>
     );
