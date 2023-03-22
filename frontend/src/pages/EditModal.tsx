@@ -25,7 +25,7 @@ const EditModal: React.FunctionComponent<any> = ({ isOpen, initialData, onClose 
     const [address, setAddress] = useState();
     const [phone, setPhone] = useState();
     const [mail, setMail] = useState();
-    const [alert]=useIonAlert()
+    const [alert]=useIonAlert();
     useEffect(()=>{
         if(user)
         {
@@ -81,7 +81,7 @@ const EditModal: React.FunctionComponent<any> = ({ isOpen, initialData, onClose 
             ],
           })
         
-    }
+    }   
 
 
 
@@ -165,8 +165,8 @@ const EditModal: React.FunctionComponent<any> = ({ isOpen, initialData, onClose 
                             errors={errors}
                             name="email"
                             as={<div style={{ color: 'red' }} />} />
-                        <IonButton type='submit' expand='block'> Sửa</IonButton>
-                    </form><IonButton expand='block' onClick={onClose}>Cancel</IonButton></></>
+                        <IonButton type='submit' expand='block' color="primary">Xác nhận</IonButton>
+                    </form><IonButton expand='block' onClick={onClose} fill="outline" color="medium">Trở về</IonButton></></>
             }
         </IonContent>
     </IonModal>
