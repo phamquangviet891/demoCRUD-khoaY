@@ -241,7 +241,7 @@ const MyModal: React.FunctionComponent<any> = ({
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel>Ngày Tạo</IonLabel>
-                                    <IonLabel>{data.CreatedDate}</IonLabel>
+                                    <IonLabel>{data.CreatedDate.toLocaleString()}</IonLabel>
                                     {/* <IonLabel>{typeof(data.CreatedDate)}</IonLabel> */}
                                 </IonItem>
                                 <IonItem>
