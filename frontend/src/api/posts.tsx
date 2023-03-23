@@ -50,8 +50,7 @@ export const useApi=()=>{
             return res;            
          }
         )
-        .catch(error=>{
-            console.log(error);          
+        .catch(error=>{        
             return error;
         })     
         return resul

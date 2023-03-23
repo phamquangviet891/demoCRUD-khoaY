@@ -49,6 +49,7 @@ const Home: React.FC = () => {
     const [data, setData] = useState<any>();
     const [presentAlert] = useIonAlert();
     const [alert] = useIonAlert();
+    
 
     const loadEmp = async () => {
         const res = await getEmp();
@@ -92,6 +93,8 @@ const Home: React.FC = () => {
             ],
         });
     };
+
+    
     return (
         <IonPage>
             <IonHeader>
@@ -202,6 +205,30 @@ const MyModal: React.FunctionComponent<any> = ({
     initialData,
 }) => {
     const data: any = initialData;
+    const ChangeFormatDate=(input:Date)=>{
+        console.log(input);
+        
+        let day=(input.getDate());
+        let Day=day.toString()
+        let month=(input.getMonth()+1);
+        console.log(month,1);
+        
+        let Month=month.toString()
+        if(day<10)
+        {
+            Day=`0${day}`
+        }     
+        if(month<10)
+        {
+            Month=`0${month}`
+
+        }        
+      return `${Day}/${Month}/${input.getFullYear()}`        
+    }
+
+    
+    // {return `${data.getFullYear()}/${data.getMonth()}/${data.getDay()}`;
+    
     return (
         <IonModal isOpen={isOpen}>
             <IonHeader></IonHeader>
@@ -223,7 +250,7 @@ const MyModal: React.FunctionComponent<any> = ({
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel>Ngày Sinh</IonLabel>
-                                    <IonLabel>{data.DateOfBirth}</IonLabel>
+                                    <IonLabel>{ChangeFormatDate(new Date(data.DateOfBirth))}</IonLabel>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel>Số Điện Thoại</IonLabel>

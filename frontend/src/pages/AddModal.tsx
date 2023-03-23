@@ -53,7 +53,6 @@ const AddModal: React.FunctionComponent<any> = ({ isOpen, onClose }) => {
             PhoneNumber: data.phoneNumber,
             Email: data.email,
         };
-        const res: any = await addEmp(emp);
         confirmAlert({
             header: "Bạn có thật sự muốn thêm nhân viên này?",
             buttons: [
