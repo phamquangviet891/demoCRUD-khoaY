@@ -17,7 +17,7 @@ export interface Empolyee{
 
 export const useApi=()=>{
     const api=axios.create({
-        baseURL:'http://101.99.31.151:3002/employees'
+        baseURL:'http://101.99.31.151:3002/api/employees'
     })
     
     const getEmp= async():Promise<any>=>{
