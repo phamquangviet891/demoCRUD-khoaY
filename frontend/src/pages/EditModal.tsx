@@ -7,6 +7,7 @@ import { ErrorMessage } from '@hookform/error-message';
 const EditModal: React.FunctionComponent<any> = ({ isOpen, initialData, onClose }) => {
     const {patchEmp} =useApi();
     const user: any = initialData;
+    
     const { handleSubmit,
         control,
         setValue,
@@ -51,7 +52,7 @@ const EditModal: React.FunctionComponent<any> = ({ isOpen, initialData, onClose 
           }
 
           confirmAlert({
-            header: 'Bạn có thật sự muốn thêm nhân viên này?',
+            header: 'Bạn có thật sự muốn thay đổi thông tin của nhân viên này?',
             buttons: [
               {
                 text: 'Hủy',
@@ -74,7 +75,7 @@ const EditModal: React.FunctionComponent<any> = ({ isOpen, initialData, onClose 
                   }
                   else
                   {
-                    alert("Không thể thêm");
+                    alert("Không thể thay đ");
                   }
                 },
               },

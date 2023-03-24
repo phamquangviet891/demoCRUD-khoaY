@@ -1,17 +1,9 @@
 import {
     IonAvatar,
-    IonButton,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardTitle,
-    IonChip,
-    IonCol,
     IonContent,
     IonFab,
     IonFabButton,
     IonFabList,
-    IonGrid,
     IonHeader,
     IonIcon,
     IonItem,
@@ -40,6 +32,9 @@ import {
 } from "ionicons/icons";
 import { v4 } from "uuid";
 import EditModal from "./EditModal";
+import EmpDetais from "./EmpDetails";
+import EmpFabbtn from "../components/EmpFabbtn";
+import Emp from "../components/Emp";
 const Home: React.FC = () => {
     const { getEmp, delEmp } = useApi();
     const [myModal, setMyModal] = useState({ isOpen: false });
@@ -49,7 +44,7 @@ const Home: React.FC = () => {
     const [data, setData] = useState<any>();
     const [presentAlert] = useIonAlert();
     const [alert] = useIonAlert();
-    
+
 
     const loadEmp = async () => {
         const res = await getEmp();
@@ -75,7 +70,7 @@ const Home: React.FC = () => {
                 {
                     text: "Hủy",
                     role: "cancel",
-                    handler: () => {},
+                    handler: () => { },
                 },
                 {
                     text: "OK",
@@ -94,7 +89,7 @@ const Home: React.FC = () => {
         });
     };
 
-    
+
     return (
         <IonPage>
             <IonHeader>
@@ -105,68 +100,27 @@ const Home: React.FC = () => {
             <IonContent fullscreen>
                 <IonList>
                     {emp.map((el: any) => (
+                        
                         // Anh dung package uuid, thay` recommend
-                        <IonItem key={v4()}>
-                            <IonAvatar
-                                slot="start"
-                                onClick={() => {
-                                    onClickDetailsButton(!myModal.isOpen, el);
-                                }}>
-                                <img
-                                    src="https://ionicframework.com/docs/img/demos/avatar.svg"
-                                    alt=""
-                                />
-                            </IonAvatar>
-                            <IonLabel
-                                onClick={() => {
-                                    onClickDetailsButton(!myModal.isOpen, el);
-                                }}>
-                                {el.FullName}
-                            </IonLabel>
-                            <IonFab
-                                slot="end"
-                                horizontal="end">
-                                <IonFabButton
-                                    size="small"
-                                    color="medium">
-                                    <IonIcon
-                                        icon={ellipsisVerticalSharp}></IonIcon>
-                                </IonFabButton>
-                                <IonFabList side="start">
-                                    <IonFabButton
-                                        color="danger"
-                                        onClick={() => {
-                                            onClickDelButton(el.id);
-                                        }}>
-                                        <IonIcon icon={trash}></IonIcon>
-                                    </IonFabButton>
-                                    <IonFabButton
-                                        color="primary"
-                                        onClick={() => {
-                                            onClickEditButton(
-                                                !editModal.isOpen,
-                                                el
-                                            );
-                                        }}>
-                                        <IonIcon icon={createOutline}></IonIcon>
-                                    </IonFabButton>
-                                    <IonFabButton
-                                        color="success"
-                                        onClick={() => {
-                                            onClickDetailsButton(
-                                                !editModal.isOpen,
-                                                el
-                                            );
-                                        }}>
-                                        <IonIcon icon={eye}></IonIcon>
-                                    </IonFabButton>
-                                </IonFabList>
-                            </IonFab>
-                        </IonItem>
+                        <Emp initialData={el}
+                        key={v4()}
+
+                            onClickDetails={() => {
+                                onClickDetailsButton(!editModal.isOpen, el);
+                            }}
+
+                            onCLickDel={() => {
+                                onClickDelButton(el.id);
+                            }}
+
+                            onClickEdit={() => {
+                                onClickEditButton(!editModal.isOpen, el);
+                            }}
+                        />
                     ))}
                 </IonList>
                 {/* Ham Modal */}
-                <MyModal
+                <EmpDetais
                     isOpen={myModal.isOpen}
                     initialData={data}
                     onClose={() => setMyModal({ isOpen: !myModal.isOpen })}
@@ -199,87 +153,3 @@ const Home: React.FC = () => {
 
 export default Home;
 
-const MyModal: React.FunctionComponent<any> = ({
-    isOpen,
-    onClose,
-    initialData,
-}) => {
-    const data: any = initialData;
-    const ChangeFormatDate=(input:Date)=>{
-        console.log(input);
-        
-        let day=(input.getDate());
-        let Day=day.toString()
-        let month=(input.getMonth()+1);
-        console.log(month,1);
-        
-        let Month=month.toString()
-        if(day<10)
-        {
-            Day=`0${day}`
-        }     
-        if(month<10)
-        {
-            Month=`0${month}`
-
-        }        
-      return `${Day}/${Month}/${input.getFullYear()}`        
-    }
-
-    
-    // {return `${data.getFullYear()}/${data.getMonth()}/${data.getDay()}`;
-    
-    return (
-        <IonModal isOpen={isOpen}>
-            <IonHeader></IonHeader>
-            <IonContent fullscreen={true}>
-                {data && (
-                    <IonCard>
-                        <IonCardHeader>
-                            <IonCardTitle>Chi Tiết Nhân Viên</IonCardTitle>
-                        </IonCardHeader>
-                        <IonCardContent>
-                            <IonList>
-                                <IonItem>
-                                    <IonLabel>Mã Nhân Viên</IonLabel>
-                                    <IonLabel>{data.EmpId}</IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel>Tên Nhân Viên</IonLabel>
-                                    <IonLabel>{data.FullName}</IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel>Ngày Sinh</IonLabel>
-                                    <IonLabel>{ChangeFormatDate(new Date(data.DateOfBirth))}</IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel>Số Điện Thoại</IonLabel>
-                                    <IonLabel>{data.PhoneNumber}</IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel>Email</IonLabel>
-                                    <IonLabel>{data.Email}</IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel>Ngày Tạo</IonLabel>
-                                    <IonLabel>{data.CreatedDate}</IonLabel>
-                                    {/* <IonLabel>{typeof(data.CreatedDate)}</IonLabel> */}
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel>Ngày Sửa</IonLabel>
-                                    <IonLabel>{data.UpdatedDate}</IonLabel>
-                                </IonItem>
-                            </IonList>
-                        </IonCardContent>
-                    </IonCard>
-                )}
-
-                <IonButton
-                    expand="block"
-                    onClick={onClose}>
-                    Trở về
-                </IonButton>
-            </IonContent>
-        </IonModal>
-    );
-};

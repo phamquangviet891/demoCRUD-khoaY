@@ -52,6 +52,8 @@ const AddModal: React.FunctionComponent<any> = ({ isOpen, onClose }) => {
             Birthplace: data.Birthplace,
             PhoneNumber: data.phoneNumber,
             Email: data.email,
+            CreatedDate:new Date(),
+            UpdatedDate: new Date(),
         };
         confirmAlert({
             header: "Bạn có thật sự muốn thêm nhân viên này?",
