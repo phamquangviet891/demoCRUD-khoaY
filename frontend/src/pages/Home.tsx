@@ -33,7 +33,6 @@ import {
 import { v4 } from "uuid";
 import EditModal from "./EditModal";
 import EmpDetais from "./EmpDetails";
-import EmpFabbtn from "../components/EmpFabbtn";
 import Emp from "../components/Emp";
 const Home: React.FC = () => {
     const { getEmp, delEmp } = useApi();
@@ -42,9 +41,7 @@ const Home: React.FC = () => {
     const [editModal, setEditModal] = useState({ isOpen: false });
     const [emp, setEmp] = useState<any>([{}]);
     const [data, setData] = useState<any>();
-    const [presentAlert] = useIonAlert();
-    const [alert] = useIonAlert();
-
+    
 
     const loadEmp = async () => {
         const res = await getEmp();
@@ -63,31 +60,7 @@ const Home: React.FC = () => {
         loadEmp();
     }, []);
 
-    const onClickDelButton = async (id: string) => {
-        presentAlert({
-            header: "Bạn có thật sự muốn xóa?",
-            buttons: [
-                {
-                    text: "Hủy",
-                    role: "cancel",
-                    handler: () => { },
-                },
-                {
-                    text: "OK",
-                    role: "confirm",
-                    handler: async () => {
-                        const res: any = await delEmp(id);
-                        try {
-                            console.log(res.status);
-                            window.location.reload();
-                        } catch {
-                            alert("Không thể xóa");
-                        }
-                    },
-                },
-            ],
-        });
-    };
+    
 
 
     return (
@@ -108,11 +81,6 @@ const Home: React.FC = () => {
                             onClickDetails={() => {
                                 onClickDetailsButton(!editModal.isOpen, el);
                             }}
-
-                            onCLickDel={() => {
-                                onClickDelButton(el.id);
-                            }}
-
                             onClickEdit={() => {
                                 onClickEditButton(!editModal.isOpen, el);
                             }}

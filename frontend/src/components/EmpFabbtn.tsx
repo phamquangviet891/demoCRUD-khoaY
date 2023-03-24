@@ -2,6 +2,9 @@ import { IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/react";
 import { createOutline, ellipsisVerticalSharp, eye, trash } from "ionicons/icons";
 
 const EmpFabbtn: React.FunctionComponent<any> = ({onClickDel,onClickDetails,onClickEdit}) => {
+
+
+    
     return (
         <IonFab
             slot="end"
