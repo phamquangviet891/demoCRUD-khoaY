@@ -1,8 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
-import useApi from '../api/posts';
-import { Controller, useForm } from 'react-hook-form'
-import { IonAccordion, IonAccordionGroup, IonButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonModal, IonTitle, useIonAlert, useIonViewWillEnter } from '@ionic/react';
+import useApi from '../../api/posts';
+import {  useForm } from 'react-hook-form'
+import { IonAccordion, IonAccordionGroup, IonButton, IonContent, IonDatetime, IonHeader, IonInput, IonItem, IonLabel, IonModal, IonTitle, useIonAlert } from '@ionic/react';
 import { ErrorMessage } from '@hookform/error-message';
 const EditModal: React.FunctionComponent<any> = ({ isOpen, initialData, onClose }) => {
     const {patchEmp} =useApi();
@@ -30,7 +30,6 @@ const EditModal: React.FunctionComponent<any> = ({ isOpen, initialData, onClose 
     useEffect(()=>{
         if(user)
         {
-            console.log(user);
             setDate(user.DateOfBirth);
             setName(user.FullName)
             setplace(user.Birthplace)

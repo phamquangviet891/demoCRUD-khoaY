@@ -1,6 +1,4 @@
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonItem, IonLabel, IonList, IonModal } from '@ionic/react';
-import React, { useEffect, useState } from 'react';
-
 const EmpDetais: React.FunctionComponent<any> = ({
     isOpen,
     onClose,
@@ -25,8 +23,6 @@ const EmpDetais: React.FunctionComponent<any> = ({
     }
 
     
-    // {return `${data.getFullYear()}/${data.getMonth()}/${data.getDay()}`;
-    
     return (
         <IonModal isOpen={isOpen}>
             <IonHeader></IonHeader>
@@ -34,34 +30,26 @@ const EmpDetais: React.FunctionComponent<any> = ({
                 {data && (
                     <IonCard>
                         <IonCardHeader>
-                            <IonCardTitle>Chi Tiết Nhân Viên</IonCardTitle>
+                            <IonCardTitle>Chi Tiết Chứng Chỉ</IonCardTitle>
                         </IonCardHeader>
                         <IonCardContent>
                             <IonList>
                                 <IonItem>
-                                    <IonLabel>Mã Nhân Viên</IonLabel>
-                                    <IonLabel>{data.EmpId}</IonLabel>
+                                    <IonLabel>Loại Chứng Chỉ</IonLabel>
+                                    <IonLabel>{data.Name}</IonLabel>
+                                </IonItem>
+                            
+                                <IonItem>
+                                    <IonLabel>Ngày Cấp</IonLabel>
+                                    <IonLabel>{ChangeFormatDate(new Date(data.IssuedDate))}</IonLabel>
                                 </IonItem>
                                 <IonItem>
-                                    <IonLabel>Tên Nhân Viên</IonLabel>
-                                    <IonLabel>{data.FullName}</IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel>Ngày Sinh</IonLabel>
-                                    <IonLabel>{ChangeFormatDate(new Date(data.DateOfBirth))}</IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel>Số Điện Thoại</IonLabel>
-                                    <IonLabel>{data.PhoneNumber}</IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel>Email</IonLabel>
-                                    <IonLabel>{data.Email}</IonLabel>
+                                    <IonLabel>Ngày Hết Hạn</IonLabel>
+                                    <IonLabel>{ChangeFormatDate(new Date(data.ExpiredDate))}</IonLabel>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel>Ngày Tạo</IonLabel>
                                     <IonLabel>{ChangeFormatDate(new Date(data.CreatedDate))}</IonLabel>
-                                    {/* <IonLabel>{typeof(data.CreatedDate)}</IonLabel> */}
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel>Ngày Sửa</IonLabel>
@@ -75,7 +63,7 @@ const EmpDetais: React.FunctionComponent<any> = ({
                 <IonButton
                     expand="block"
                     onClick={onClose}>
-                    Trở về
+                    Cancel
                 </IonButton>
             </IonContent>
         </IonModal>

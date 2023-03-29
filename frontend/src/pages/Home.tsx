@@ -1,47 +1,34 @@
 import {
-    IonAvatar,
     IonContent,
     IonFab,
     IonFabButton,
-    IonFabList,
     IonHeader,
     IonIcon,
-    IonItem,
-    IonLabel,
     IonList,
-    IonListHeader,
-    IonModal,
     IonPage,
-    IonRow,
     IonTitle,
     IonToolbar,
-    useIonAlert,
-    useIonViewWillEnter,
 } from "@ionic/react";
 import { useEffect, useState } from "react";
 import useApi from "../api/posts";
-import AddModal from "./AddModal";
+import AddModal from "../components/Employee/AddModal";
 import "./Home.css";
 import {
-    addCircleSharp,
-    trash,
-    createOutline,
-    eye,
-    add,
-    ellipsisVerticalSharp,
+    add
 } from "ionicons/icons";
 import { v4 } from "uuid";
-import EditModal from "./EditModal";
-import EmpDetais from "./EmpDetails";
-import Emp from "../components/Emp";
+import EditModal from "../components/Employee/EditModal";
+import EmpDetais from "../components/Employee/EmpDetails";
+import Emp from "../components/Employee/Emp";
+import Certificate from "../components/Cerificate/Certificate";
 const Home: React.FC = () => {
-    const { getEmp, delEmp } = useApi();
+    const { getEmp} = useApi();
     const [myModal, setMyModal] = useState({ isOpen: false });
     const [addModal, setAddModal] = useState({ isOpen: false });
     const [editModal, setEditModal] = useState({ isOpen: false });
     const [emp, setEmp] = useState<any>([{}]);
     const [data, setData] = useState<any>();
-    
+    const [certificateModal,setCertificateModal]=useState({isOpen:false});
 
     const loadEmp = async () => {
         const res = await getEmp();
@@ -56,6 +43,10 @@ const Home: React.FC = () => {
         setEditModal({ isOpen: flag });
         setData(input);
     };
+    const onClickCertificate=((flag:boolean,input:any)=>{
+        setCertificateModal({isOpen:flag})
+        setData(input);
+    })
     useEffect(() => {
         loadEmp();
     }, []);
@@ -76,13 +67,16 @@ const Home: React.FC = () => {
                         
                         // Anh dung package uuid, thay` recommend
                         <Emp initialData={el}
-                        key={v4()}
+                         key={v4()}
 
                             onClickDetails={() => {
                                 onClickDetailsButton(!editModal.isOpen, el);
                             }}
                             onClickEdit={() => {
                                 onClickEditButton(!editModal.isOpen, el);
+                            }}
+                            onCLickCertificate={()=>{
+                                onClickCertificate(!certificateModal.isOpen,el)
                             }}
                         />
                     ))}
@@ -102,6 +96,9 @@ const Home: React.FC = () => {
                     initialData={data}
                     onClose={() => setEditModal({ isOpen: !editModal.isOpen })}
                 />
+                <Certificate isOpen={certificateModal.isOpen}
+                initialData={data}
+                onClose={()=>setCertificateModal({isOpen:!certificateModal.isOpen})} />
                 <IonFab
                     horizontal="center"
                     vertical="bottom">

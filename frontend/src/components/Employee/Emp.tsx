@@ -1,14 +1,12 @@
 import { IonAvatar, IonItem, IonLabel, useIonAlert } from "@ionic/react";
-import { v4 } from "uuid";
+
 import EmpFabbtn from "./EmpFabbtn";
-import useApi from "../api/posts";
-const Emp: React.FunctionComponent<any> = ({ initialData,key, onClickDetails, onClickEdit }) => {
+import useApi from "../../api/posts";
+const Emp: React.FunctionComponent<any> = ({ initialData,key, onClickDetails, onClickEdit,onCLickCertificate }) => {
     const [presentAlert] = useIonAlert();
     const [alert] = useIonAlert();
     const {delEmp}=useApi()
     const onClickDelButton = async (id: string) => {
-        console.log("fckkkkkk");
-        
         presentAlert({
             header: "Bạn có thật sự muốn xóa?",
             buttons: [
@@ -52,6 +50,8 @@ const Emp: React.FunctionComponent<any> = ({ initialData,key, onClickDetails, on
             <EmpFabbtn onClickDetails={onClickDetails}
                 onClickDel={()=>{onClickDelButton(el.id)}}
                 onClickEdit={onClickEdit}
+                onCLickCertificate={onCLickCertificate}
+                initialData={el}
             />
         </IonItem>
     )

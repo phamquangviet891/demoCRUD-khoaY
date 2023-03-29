@@ -2,29 +2,21 @@ import {
     IonAccordion,
     IonAccordionGroup,
     IonButton,
-    IonCard,
-    IonCol,
     IonContent,
     IonDatetime,
-    IonGrid,
     IonHeader,
-    IonIcon,
     IonInput,
     IonItem,
     IonLabel,
-    IonList,
     IonModal,
-    IonPage,
-    IonRow,
     IonTitle,
-    IonToolbar,
     useIonAlert,
-    useIonViewWillEnter,
+
 } from "@ionic/react";
 import React, { useState } from "react";
-import useApi from "../api/posts";
+import useApi from "../../api/posts";
 import "./AddModal.css";
-import { Controller, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 const AddModal: React.FunctionComponent<any> = ({ isOpen, onClose }) => {
     const { addEmp } = useApi();
@@ -37,10 +29,7 @@ const AddModal: React.FunctionComponent<any> = ({ isOpen, onClose }) => {
     const [Alert] = useIonAlert();
     const {
         handleSubmit,
-        control,
-        setValue,
         register,
-        getValues,
         formState: { errors },
     } = useForm();
     const registerUser = async (data: any) => {

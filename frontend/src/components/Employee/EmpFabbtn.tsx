@@ -1,10 +1,8 @@
 import { IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/react";
-import { createOutline, ellipsisVerticalSharp, eye, trash } from "ionicons/icons";
+import { createOutline, documentAttach, ellipsisVerticalSharp, eye, trash } from "ionicons/icons";
 
-const EmpFabbtn: React.FunctionComponent<any> = ({onClickDel,onClickDetails,onClickEdit}) => {
-
-
-    
+const EmpFabbtn: React.FunctionComponent<any> = ({onClickDel,onClickDetails,onClickEdit,onCLickCertificate,initialData}) => {
+    const data:any=initialData;
     return (
         <IonFab
             slot="end"
@@ -30,6 +28,12 @@ const EmpFabbtn: React.FunctionComponent<any> = ({onClickDel,onClickDetails,onCl
                     color="success"
                     onClick={onClickDetails}>
                     <IonIcon icon={eye}></IonIcon>
+                </IonFabButton>
+                <IonFabButton
+                    color="success"
+                    onClick={onCLickCertificate}>
+                    
+                    <IonIcon icon={documentAttach}></IonIcon>
                 </IonFabButton>
             </IonFabList>
         </IonFab>
