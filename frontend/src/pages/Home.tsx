@@ -81,6 +81,17 @@ const Home: React.FC = () => {
                         />
                     ))}
                 </IonList>
+                <IonFab
+                    horizontal="center">
+                    <IonFabButton
+                        onClick={() => {
+                            setAddModal({
+                                isOpen: !addModal.isOpen,
+                            });
+                        }}>
+                        <IonIcon icon={add}></IonIcon>
+                    </IonFabButton>
+                </IonFab>
                 {/* Ham Modal */}
                 <EmpDetais
                     isOpen={myModal.isOpen}
@@ -99,18 +110,7 @@ const Home: React.FC = () => {
                 <Certificate isOpen={certificateModal.isOpen}
                 initialData={data}
                 onClose={()=>setCertificateModal({isOpen:!certificateModal.isOpen})} />
-                <IonFab
-                    horizontal="center"
-                    vertical="bottom">
-                    <IonFabButton
-                        onClick={() => {
-                            setAddModal({
-                                isOpen: !addModal.isOpen,
-                            });
-                        }}>
-                        <IonIcon icon={add}></IonIcon>
-                    </IonFabButton>
-                </IonFab>
+                
             </IonContent>
         </IonPage>
     );

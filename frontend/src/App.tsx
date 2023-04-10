@@ -1,5 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTab, IonTabBar, IonTabButton, IonTabs, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 
@@ -22,17 +22,36 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import Emp from './components/Employee/Emp';
+import { idCardOutline, personOutline } from 'ionicons/icons';
+import Department from './pages/Department';
 setupIonicReact();
 
 const App: React.FC = () => (
   
   <IonApp>
     <IonReactRouter>
+      <IonTabs>
       <IonRouterOutlet>
-        <Route exact path="/">
+      <Redirect exact path="/" to="/employee" />
+        <Route exact path="/employee">
           <Home />
         </Route>  
+        <Route exact path="/department">
+          <Department />
+        </Route>  
       </IonRouterOutlet>
+  
+      <IonTabBar slot='bottom'>
+        <IonTabButton tab='employee' href='/employee'>
+          <IonIcon icon={personOutline} />
+          <IonLabel>Nhân Viên</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab='department' href='/department'>
+          <IonIcon icon={idCardOutline} />
+          <IonLabel>Phòng</IonLabel>
+        </IonTabButton>
+      </IonTabBar>
+      </IonTabs>
     </IonReactRouter>
   </IonApp>
 );
