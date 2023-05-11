@@ -24,7 +24,7 @@ const Certificate: React.FunctionComponent<any> = ({isOpen,onClose,initialData})
             if(property)
             {    
             const res=await getCertificate(property.id)
-            console.log(res);  
+            
             setdata([...res.data]);  
             }
         }

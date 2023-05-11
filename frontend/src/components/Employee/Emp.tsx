@@ -21,7 +21,7 @@ const Emp: React.FunctionComponent<any> = ({ initialData,key, onClickDetails, on
                     handler: async () => {
                         const res: any = await delEmp(id);
                         try {
-                            console.log(res.status);
+                        
                             window.location.reload();
                         } catch {
                             alert("Không thể xóa");

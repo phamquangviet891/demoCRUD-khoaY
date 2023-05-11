@@ -39,7 +39,7 @@ const AddDeparment: React.FunctionComponent<any> = ({ isOpen, onClose }) => {
                                     text: "OK",
                                     role: "confirm",
                                     handler: async () => {
-                                        console.log(res)
+                                        
                                         await dismiss;
                                         window.location.reload();
                                     }}

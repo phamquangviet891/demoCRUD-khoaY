@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 
-export const DepartmentApi = () => {
+export const WorkingApi = () => {
     const api = axios.create({
         baseURL: "http://101.99.31.151:3002/api/departments",
     });
@@ -59,27 +59,14 @@ export const DepartmentApi = () => {
         })
         return resul;
     }
-    const GetWorkingEmp=async(id:string)=>{
-        const resul=await api.get(`/${id}/workings`)
-        .then(res=>{
-            
-            return res;
-            
-        })
-        .catch(error=>{
-            return error;
-        })
-        return resul;
-    }
 
     return {
         GetDepartment,
         AddDeparment,
         DelDeparment,
         GetEmp,
-        AddEmp,
-        GetWorkingEmp
+        AddEmp
     }
 }
 
-export default DepartmentApi;
+export default WorkingApi;

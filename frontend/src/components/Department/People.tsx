@@ -3,20 +3,33 @@ import React, { useEffect, useState } from 'react';
 import DepartmentApi from '../../api/Department';
 import { add, arrowBackOutline } from 'ionicons/icons';
 import AddEmployee from './AddEmp';
+import useApi from '../../api/posts';
 
 const PeopleDeparment: React.FunctionComponent<any> = ({ depart, isOpen, onClose }) => {
-    const department: any = { depart }
+    const department: any =  depart 
     const [emp, setEmp] = useState([{}]);
-    const { GetEmp } = DepartmentApi()
+    const [workings,setWorkings]=useState([{}]);
+    const { GetWorkingEmp } = DepartmentApi()
+    const { findEmp } = useApi()
     const [addEmp, setAddEmp] = useState({ isOpen: false });
-    const GetEmpOfDepart = async () => {
-        const res = await GetEmp(department.id)
-        setEmp(res.data)
+    const GetEmpOfDepart = async () => {   
+        const res = await GetWorkingEmp(depart.id)
+        setWorkings([...res.data]);
+        
     }
-
     useEffect(() => {
         GetEmpOfDepart();
-    }, [])
+    }, [department])
+    useEffect(() => {
+        if(workings )
+        {
+        workings.map(async(el:any)=>{
+            const res=await findEmp(el.employeeId);         
+            el.FullName=res.data.FullName;           
+        })
+        setEmp([...workings])
+    }
+    }, [workings])
     
     return (
         <IonModal isOpen={isOpen}>
@@ -41,14 +54,20 @@ const PeopleDeparment: React.FunctionComponent<any> = ({ depart, isOpen, onClose
                 <IonList>
                     {emp.length && emp.map((el: any) => {
                         return (
-
+                            
+                            
                             <IonItem><IonAvatar slot="start">
                                 <img
                                     src="https://ionicframework.com/docs/img/demos/avatar.svg"
                                     alt="" />
-                            </IonAvatar><IonLabel>
-                                    {el.EmpId}
-                                </IonLabel></IonItem>
+                            </IonAvatar>
+                                <IonLabel>
+                                    {el.FullName}
+                                </IonLabel>
+                                <IonLabel>
+                                    {el.Position}
+                                </IonLabel>
+                                </IonItem>
 
                         )
                     }) 

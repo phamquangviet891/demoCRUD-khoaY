@@ -60,7 +60,7 @@ const Add: React.FunctionComponent<any> = ({ isOpen, onClose,initialId }) => {
                         const res: any = await AddCertificate(certi);
 
                         if (res.status == 200) {
-                            console.log(res.status);
+                            
                             window.location.reload();
                         } else {
                             Alert("Không thể thêm");

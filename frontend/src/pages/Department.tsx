@@ -139,6 +139,7 @@ const Department: React.FC = () => {
                 onClose={()=>{
                     setPeopleDeparment({isOpen:!peopleDeparment.isOpen})
                 }}
+                depart={department}
                 />
             </IonContent>
         </IonPage>
