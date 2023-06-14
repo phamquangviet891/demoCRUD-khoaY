@@ -1,26 +1,55 @@
-import { IonCard, IonContent, IonFab, IonFabButton, IonFabList, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar, useIonAlert, useIonLoading, useIonViewWillEnter } from '@ionic/react';
-import React, { useState } from 'react';
-import DepartmentApi from '../api/Department';
-import { v4 } from 'uuid';
-import { add, addCircle, createOutline, ellipsisVerticalSharp, eye, peopleOutline, trash } from 'ionicons/icons';
-import AddDeparment from '../components/Department/Add';
-import PeopleDeparment from '../components/Department/People';
+import {
+    IonActionSheet,
+    IonButton,
+    IonCard,
+    IonContent,
+    IonFab,
+    IonFabButton,
+    IonFabList,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    useIonAlert,
+    useIonLoading,
+    useIonViewWillEnter,
+} from "@ionic/react";
+import React, { useState } from "react";
+import DepartmentApi from "../api/Department";
+import { v4 } from "uuid";
+import {
+    add,
+    addCircle,
+    createOutline,
+    ellipsisVerticalSharp,
+    eye,
+    peopleOutline,
+    trash,
+} from "ionicons/icons";
+import AddDeparment from "../components/Department/Add";
+import PeopleDeparment from "../components/Department/People";
+import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces";
 const Department: React.FC = () => {
     const [departments, setDepartments] = useState([{}]);
-    const [department,setDepartment]=useState();
-    const [addDeparment, setAddDepartment] = useState({ isOpen: false })
+    const [department, setDepartment] = useState();
+    const [addDeparment, setAddDepartment] = useState({ isOpen: false });
     const { GetDepartment, DelDeparment } = DepartmentApi();
     const [confirmAlert] = useIonAlert();
     const [Alert] = useIonAlert();
-    const [loading, dismiss] = useIonLoading()
-    const [peopleDeparment,setPeopleDeparment]=useState({isOpen:false})
+    const [loading, dismiss] = useIonLoading();
+    const [peopleDeparment, setPeopleDeparment] = useState({ isOpen: false });
+    const [isOpen, setIsOpen] = useState(false);
     const getDepartments = async () => {
         const resul = await GetDepartment();
         setDepartments([...resul.data]);
-    }
+    };
     useIonViewWillEnter(() => {
         getDepartments();
-    })
+    });
     const DelAparmentButton = (id: string) => {
         confirmAlert({
             header: "Bạn có thật sự muốn xóa phòng này?",
@@ -28,7 +57,7 @@ const Department: React.FC = () => {
                 {
                     text: "Hủy",
                     role: "cancel",
-                    handler: () => { },
+                    handler: () => {},
                 },
                 {
                     text: "Ok",
@@ -46,25 +75,24 @@ const Department: React.FC = () => {
                                         handler: async () => {
                                             await dismiss;
                                             window.location.reload();
-                                        }
-                                    }
-                                ]
-                            })
-                        }
-                        else {
+                                        },
+                                    },
+                                ],
+                            });
+                        } else {
                             Alert("Không thể xóa");
                         }
                     },
-                }
-            ]
-        }
-        )
-    }
+                },
+            ],
+        });
+    };
 
-    const onClickPeopleButton=(deparment:any)=>{
+    const onClickPeopleButton = (deparment: any) => {
         setDepartment(deparment);
-        setPeopleDeparment({isOpen:!peopleDeparment.isOpen})
-    }
+        setPeopleDeparment({ isOpen: !peopleDeparment.isOpen });
+    };
+    /**
     return (
         <IonPage>
             <IonHeader>
@@ -142,6 +170,45 @@ const Department: React.FC = () => {
                 depart={department}
                 />
             </IonContent>
+        </IonPage>
+    ); */
+    const departmentButtons = departments.map((department: any) => ({
+        text: department.Name,
+        rold: department.Name,
+        data: {
+            action: department.Name,
+        },
+    }));
+
+    const [pointedDepartment, setPointedDepartment] =
+        useState<OverlayEventDetail>();
+    return (
+        <IonPage>
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Phòng</IonTitle>
+                </IonToolbar>
+                <IonContent>
+                    <IonButton onClick={() => setIsOpen(true)}>
+                        Lọc Phòng Ban
+                    </IonButton>
+                    <IonActionSheet
+                        isOpen={isOpen}
+                        header="Phòng ban"
+                        buttons={[...departmentButtons]}
+                        onDidDismiss={({ detail }) => {
+                            setPointedDepartment(detail);
+                            setIsOpen(false);
+                        }}></IonActionSheet>
+
+                    {/* log pointed Department*/}
+                    {pointedDepartment && (
+                        <code>
+                            {JSON.stringify(pointedDepartment, null, 2)}
+                        </code>
+                    )}
+                </IonContent>
+            </IonHeader>
         </IonPage>
     );
 };
